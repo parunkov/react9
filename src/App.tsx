@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import { Post } from './interfaces';
+import { faker } from '@faker-js/faker';
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -16,11 +16,17 @@ function App() {
         .then((res) => {
             setLoading(false);
             console.log(res.data); 
+            res.data.forEach((item: Post) => {
+              const string: string = faker.lorem.text();
+              item.text = string;
+              const startDate = faker.date.future({ years: 1 });
+              const endDate = faker.date.future({ years: 1, refDate: startDate });
+              item.startDate = startDate;
+              item.endDate = endDate;
+            });
             data = res.data;           
-            // setPosts(res.data);
         })
         .catch((err) => {
-            // Error handling
             setLoading(false);
             console.log(err);
             data = null;
@@ -32,19 +38,6 @@ function App() {
     setLoading(true);
     const data: Post[] | null = await getData(page);
     if (data) setPosts(data);
-    // axios
-    //     .get('https://jsonplaceholder.typicode.com/todos?_start=0&_limit=10')
-    //     .then((res) => {
-    //         setLoading(false);
-    //         console.log(res.data);            
-    //         setPosts(res.data);
-    //     })
-    //     .catch((err) => {
-    //         // Error handling
-    //         setLoading(false);
-    //         console.log(err);
-    //         return null;
-    //     });
 };
 useEffect(() => {
   getPosts();
@@ -56,7 +49,7 @@ useEffect(() => {
         <div className="header"></div>
         <div className="postsWrapper">
           {posts.map((item) => {
-            return <div>{item.title}</div>
+            return <div key={item.id}>{item.title}</div>
           })}
         </div>
       </div>

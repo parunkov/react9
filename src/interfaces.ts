@@ -3,4 +3,7 @@ export interface Post {
     id: number;
     title: string;
     userId: number;
+    text?: string;
+    startDate?: Date;
+    endDate?: Date;
 }
