@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import './App.css';
+import './App.scss';
 import axios from 'axios';
-import { Post } from './interfaces';
+import { IPost } from './interfaces';
 import { faker } from '@faker-js/faker';
 import InfiniteScroll from 'react-infinite-scroller';
+import Post from './components/Post';
 
 function App() {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<IPost[]>([]);
   const [hasMoreItems, setHasMoreItems] = useState(true);
 
-  const getData = async (page: number): Promise<Post[] | null> => {
-    let data: Post | null = null;
+  const getData = async (page: number): Promise<IPost[] | null> => {
+    let data: IPost | null = null;
     await axios
       .get(`https://jsonplaceholder.typicode.com/todos?_start=${page * 10}&_limit=10`)
       .then((res) => {
@@ -20,7 +21,7 @@ function App() {
           setHasMoreItems(true);
         }
 
-        res.data.forEach((item: Post) => {
+        res.data.forEach((item: IPost) => {
           const string: string = faker.lorem.text();
           item.text = string;
           const startDate = faker.date.future({ years: 1 });
@@ -39,7 +40,7 @@ function App() {
   }
 
   const getPosts = async (page: number) => {
-    const data: Post[] | null = await getData(page);
+    const data: IPost[] | null = await getData(page);
     if (data) setPosts([...posts, ...data]);
   };
 
@@ -53,12 +54,20 @@ function App() {
             pageStart={-1}
             loadMore={getPosts}
             hasMore={hasMoreItems}
-            loader={<div className="text-center">loading data ...</div>}>
+            loader={<div className="text-center">loading ...</div>}>
             {posts.map((item) => {
-              return item.id && <div className='post' key={item.id}>{item.id}</div>
+              return <Post 
+                key={item.id} 
+                id={item.id} 
+                completed={item.completed} 
+                title={item.title} 
+                startDate={item.startDate} 
+                endDate={item.endDate}
+                text={item.text}
+              />
             })}
           </InfiniteScroll>
-          {hasMoreItems ? "" : <div className="text-center">no data anymore ...</div>}
+          {hasMoreItems ? "" : <div className="text-center">no posts anymore ...</div>}
         </div>
       </div>
     </div>

@@ -1,8 +1,8 @@
-export interface Post {
+export interface IPost {
     completed: boolean;
     id: number;
     title: string;
-    userId: number;
+    userId?: number;
     text?: string;
     startDate?: Date;
     endDate?: Date;

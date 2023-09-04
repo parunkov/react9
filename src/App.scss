@@ -1,0 +1,14 @@
+.app {
+  font-family: -apple-system, "system-ui", "BlinkMacSystemFont", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    * {
+      box-sizing: border-box;
+    }
+}
+.container {
+  width: 255px;
+  margin: 0 auto;
+}
+.post {
+  height: 100px;
+}
