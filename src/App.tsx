@@ -25,9 +25,13 @@ function App() {
           const string: string = faker.lorem.text();
           item.text = string;
           const startDate = faker.date.future({ years: 1 });
-          const endDate = faker.date.future({ years: 1, refDate: startDate });
           item.startDate = startDate;
-          item.endDate = endDate;
+          item.endDate = faker.date.future({ years: 1, refDate: startDate });
+          console.log(faker.person.jobArea());
+          
+          item.jobArea = faker.person.jobArea();
+          item.jobDescriptor = faker.person.jobDescriptor();
+
         });
         data = res.data;
       })
@@ -64,6 +68,8 @@ function App() {
                 startDate={item.startDate} 
                 endDate={item.endDate}
                 text={item.text}
+                jobArea={item.jobArea}
+                jobDescriptor={item.jobDescriptor}
               />
             })}
           </InfiniteScroll>

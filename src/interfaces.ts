@@ -6,4 +6,6 @@ export interface IPost {
     text?: string;
     startDate?: Date;
     endDate?: Date;
+    jobArea?: string;
+    jobDescriptor?:string;
 }
