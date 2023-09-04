@@ -39,3 +39,32 @@
     font-weight: 400;
     line-height: 140%; /* 18.2px */
 }
+.tags {
+    display: flex;
+    align-items: center;
+}
+.tag {
+    padding: 2px 6px;
+    margin-right: 4px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 140%; /* 16.8px */
+    border-radius: 4px;
+    background: #b233a6;
+}
+.grayTag {
+    position: relative;
+    padding: 2px 6px;
+    color: #616c82;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 140%; /* 16.8px */
+    border-radius: 4px 0px 0px 4px;
+    background: #ebeef6;
+}
+.tagEnd {
+    position: absolute;
+    right: -8px;
+    top: 0;
+}
