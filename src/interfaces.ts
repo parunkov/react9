@@ -8,4 +8,5 @@ export interface IPost {
     endDate?: Date;
     jobArea?: string;
     jobDescriptor?:string;
+    onChange?: (id: number, value: boolean) => void;
 }

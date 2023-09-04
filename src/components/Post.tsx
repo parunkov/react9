@@ -1,10 +1,14 @@
 import { IPost } from "../interfaces";
 import styles from './Post.module.scss';
 
-function Post({ completed, title, startDate, endDate, text, jobArea, jobDescriptor }: IPost) {
+function Post({ id, completed, title, startDate, endDate, text, jobArea, jobDescriptor, onChange }: IPost) {
+    const onCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (onChange) onChange(id, event.target.checked);
+    };
+
     return (
         <div className={styles.post}>
-            <div className={styles.title}><input className={styles.checkbox} type="checkbox" checked={completed}></input>{title}</div>
+            <div className={styles.title}><input className={styles.checkbox} type="checkbox" checked={completed} onChange={onCheckboxChange}></input>{title}</div>
             <div className={styles.dates}>
                 <div className={styles.date}>{startDate?.toLocaleString('en-US', { day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric' })}</div>
                 <div className={styles.date}>{endDate?.toLocaleString('en-US', { day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric' })}</div>

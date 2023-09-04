@@ -27,8 +27,6 @@ function App() {
           const startDate = faker.date.future({ years: 1 });
           item.startDate = startDate;
           item.endDate = faker.date.future({ years: 1, refDate: startDate });
-          console.log(faker.person.jobArea());
-          
           item.jobArea = faker.person.jobArea();
           item.jobDescriptor = faker.person.jobDescriptor();
 
@@ -47,6 +45,13 @@ function App() {
     const data: IPost[] | null = await getData(page);
     if (data) setPosts([...posts, ...data]);
   };
+
+  const onCheckboxChange = (id: number, value: boolean) => {
+    const postIndex = posts.findIndex((item) => item.id === id);
+    const newPosts = [...posts];
+    newPosts[postIndex].completed = value;
+    setPosts(newPosts);
+  }
 
   return (
     <div className="app">
@@ -70,6 +75,7 @@ function App() {
                 text={item.text}
                 jobArea={item.jobArea}
                 jobDescriptor={item.jobDescriptor}
+                onChange={onCheckboxChange}
               />
             })}
           </InfiniteScroll>
