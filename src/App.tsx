@@ -9,21 +9,42 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
 
-  const getPosts = () => {
-    setLoading(true);
-    axios
-        .get('https://jsonplaceholder.typicode.com/todos?_start=0&_limit=10')
+  const getData = async (page: number): Promise<Post[] | null> => {
+    let data: Post | null = null;
+    await axios
+        .get(`https://jsonplaceholder.typicode.com/todos?_start=${page}&_limit=10`)
         .then((res) => {
             setLoading(false);
-            console.log(res.data);            
-            setPosts(res.data);
+            console.log(res.data); 
+            data = res.data;           
+            // setPosts(res.data);
         })
         .catch((err) => {
             // Error handling
             setLoading(false);
             console.log(err);
-            return null;
+            data = null;
         });
+    return data;
+  }
+
+  const getPosts = async () => {
+    setLoading(true);
+    const data: Post[] | null = await getData(page);
+    if (data) setPosts(data);
+    // axios
+    //     .get('https://jsonplaceholder.typicode.com/todos?_start=0&_limit=10')
+    //     .then((res) => {
+    //         setLoading(false);
+    //         console.log(res.data);            
+    //         setPosts(res.data);
+    //     })
+    //     .catch((err) => {
+    //         // Error handling
+    //         setLoading(false);
+    //         console.log(err);
+    //         return null;
+    //     });
 };
 useEffect(() => {
   getPosts();
