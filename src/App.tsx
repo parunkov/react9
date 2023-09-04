@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.scss';
 import axios from 'axios';
 import { IPost } from './interfaces';
@@ -9,6 +9,7 @@ import Post from './components/Post';
 function App() {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [hasMoreItems, setHasMoreItems] = useState(true);
+  const [postsValue, setPostsValue] = useState(0);
 
   const getData = async (page: number): Promise<IPost[] | null> => {
     let data: IPost | null = null;
@@ -46,6 +47,10 @@ function App() {
     if (data) setPosts([...posts, ...data]);
   };
 
+  useEffect(() => {
+    setPostsValue(posts.length);
+  }, [posts]);
+
   const onCheckboxChange = (id: number, value: boolean) => {
     const postIndex = posts.findIndex((item) => item.id === id);
     const newPosts = [...posts];
@@ -56,21 +61,26 @@ function App() {
   return (
     <div className="app">
       <div className="container">
-        <div className="header"></div>
+        <div className="header">
+          <div className="title">Today</div>
+          <div className="plus">+</div>
+          <div className="value">{postsValue}</div>
+        </div>
         <div className="postsWrapper">
           <InfiniteScroll
             threshold={50}
             pageStart={-1}
             loadMore={getPosts}
             hasMore={hasMoreItems}
-            loader={<div className="text-center">loading ...</div>}>
+            loader={<div className="text-center">loading ...</div>}
+            useWindow={false}>
             {posts.map((item) => {
-              return <Post 
-                key={item.id} 
-                id={item.id} 
-                completed={item.completed} 
-                title={item.title} 
-                startDate={item.startDate} 
+              return <Post
+                key={item.id}
+                id={item.id}
+                completed={item.completed}
+                title={item.title}
+                startDate={item.startDate}
                 endDate={item.endDate}
                 text={item.text}
                 jobArea={item.jobArea}

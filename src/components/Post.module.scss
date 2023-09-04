@@ -8,12 +8,11 @@
         0px 0px 2px 0px #eef4fe;
 }
 .checkbox {
+    margin-left: 0;
     margin-right: 10px;
     width: 16px;
     height: 16px;
     border-radius: 4px;
-    border: 1px solid #aab7d4;
-    background: #f8fafb;
     transform: translateY(3px);
     cursor: pointer;
 }
