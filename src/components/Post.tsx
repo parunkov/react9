@@ -19,6 +19,8 @@ function Post({ id, title, startDate, endDate, text }: IPost) {
                         </svg>
                     </div>
                 </div>
+                <div className={styles.space}></div>
+                <img className={styles.img} src={require('./Img.png')} alt="user" />
             </div>
         </div>
     )
